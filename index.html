@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Villa Maria Pia — B&B a Monopoli, Puglia</title>
+  <meta name="description" content="Villa Maria Pia è un B&B accogliente a Monopoli, in Puglia. Camere curate, colazione con prodotti freschi, ospitalità autentica a pochi passi dal centro storico e dal mare." />
+  <meta name="keywords" content="B&B Monopoli, Villa Maria Pia, bed and breakfast Puglia, alloggio Monopoli, vacanze Puglia" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Villa Maria Pia — B&B a Monopoli, Puglia" />
+  <meta property="og:description" content="Un luogo autentico dove sentirsi davvero a casa. Accoglienza, cura dei dettagli e tranquillità nel cuore della Puglia." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.villamariapia.it" />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=1200" />
+  <meta property="og:locale" content="it_IT" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Lato:wght@300;400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ============================================
+       NAVBAR
+  ============================================ -->
+  <header class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#hero" class="nav-logo">
+        <!-- Olive leaf SVG inline -->
+        <svg class="nav-logo-icon" viewBox="0 0 24 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M12 28 C12 28 4 20 4 12 C4 7.58 7.58 4 12 4 C16.42 4 20 7.58 20 12 C20 20 12 28 12 28Z" fill="#7A8C6E" opacity="0.6"/>
+          <path d="M12 28 C10 22 8 16 9 10 C10 6 12 4 12 4" stroke="#B8986A" stroke-width="1" fill="none"/>
+          <ellipse cx="9" cy="13" rx="3" ry="2" transform="rotate(-30 9 13)" fill="#7A8C6E" opacity="0.8"/>
+          <ellipse cx="15" cy="10" rx="3" ry="2" transform="rotate(30 15 10)" fill="#7A8C6E" opacity="0.8"/>
+        </svg>
+        <span class="nav-logo-text">Villa Maria Pia</span>
+      </a>
+
+      <nav class="nav-links" id="nav-links" aria-label="Navigazione principale">
+        <a href="#intro" id="nav-link-villa" class="nav-link">La Villa</a>
+        <a href="#camere" id="nav-link-rooms" class="nav-link">Camere</a>
+        <a href="#colazione" id="nav-link-breakfast" class="nav-link">Colazione</a>
+        <a href="#territorio" id="nav-link-territory" class="nav-link">Monopoli</a>
+        <a href="#recensioni" id="nav-link-reviews" class="nav-link">Ospiti</a>
+        <a href="#contatti" id="nav-link-book" class="nav-link nav-link-cta">Prenota</a>
+      </nav>
+
+      <button id="lang-toggle" class="btn btn-ghost-light" type="button">EN</button>
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Apri menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="nav-mobile-overlay" id="nav-mobile-overlay">
+    <nav class="nav-mobile-links" aria-label="Menu mobile">
+      <a href="#intro" id="mobile-nav-link-villa" class="nav-mobile-link">La Villa</a>
+      <a href="#camere" id="mobile-nav-link-rooms" class="nav-mobile-link">Camere</a>
+      <a href="#colazione" id="mobile-nav-link-breakfast" class="nav-mobile-link">Colazione</a>
+      <a href="#territorio" id="mobile-nav-link-territory" class="nav-mobile-link">Monopoli</a>
+      <a href="#recensioni" id="mobile-nav-link-reviews" class="nav-mobile-link">Ospiti</a>
+      <a href="#contatti" id="mobile-nav-link-book" class="nav-mobile-link">Prenota</a>
+    </nav>
+  </div>
+
+  <main>
+
+    <!-- ============================================
+         HERO SECTION
+    ============================================ -->
+    <section class="hero" id="hero" aria-label="Benvenuto">
+      <div class="hero-image-wrap">
+        <img
+          src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=1600&q=80"
+          alt="Vista di Villa Maria Pia con giardino e cielo pugliese"
+          class="hero-image"
+          loading="eager"
+        />
+        <div class="hero-overlay"></div>
+      </div>
+
+      <div class="hero-content">
+        <p id="hero-label" class="hero-label reveal-hero">Monopoli · Puglia</p>
+        <h1 id="hero-title" class="hero-title reveal-hero">
+          Dove il Mediterraneo<br />
+          <em id="hero-title-em">diventa casa</em>
+        </h1>
+        <p id="hero-subtitle" class="hero-subtitle reveal-hero">
+          Un soggiorno autentico, a pochi passi dal centro storico e dal mare.
+        </p>
+        <div class="hero-ctas reveal-hero">
+          <a id="hero-btn-book" href="#contatti" class="btn btn-primary">Prenota ora</a>
+          <a id="hero-btn-discover" href="#intro" class="btn btn-ghost">Scopri la villa</a>
+        </div>
+      </div>
+
+      <div class="hero-scroll-hint reveal-hero" aria-hidden="true">
+        <span id="hero-scroll">Scorri</span>
+        <svg viewBox="0 0 12 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="1" y="1" width="10" height="18" rx="5" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="6" cy="5" r="2" fill="currentColor" class="scroll-dot"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Decorative divider -->
+    <div class="divider-ornament" aria-hidden="true">
+      <span class="divider-line"></span>
+      <svg viewBox="0 0 30 20" fill="none" xmlns="http://www.w3.org/2000/svg" class="divider-icon">
+        <path d="M15 2 C15 2 8 8 8 14 C8 17.31 11.13 20 15 20 C18.87 20 22 17.31 22 14 C22 8 15 2 15 2Z" fill="#B8986A" opacity="0.4"/>
+        <path d="M15 20 L15 10" stroke="#B8986A" stroke-width="1"/>
+      </svg>
+      <span class="divider-line"></span>
+    </div>
+
+    <!-- ============================================
+         INTRO / ABOUT
+    ============================================ -->
+    <section class="section intro-section" id="intro">
+      <div class="container">
+        <div class="intro-grid">
+          <div class="intro-text">
+            <p id="intro-label" class="section-label reveal">B&B · Monopoli</p>
+            <h2 id="intro-title" class="section-title reveal">Più di un soggiorno.<br /><em id="intro-title-em">Un'esperienza.</em></h2>
+            <div class="intro-body reveal">
+              <p id="intro-body-1">
+                Villa Maria Pia nasce dalla passione per l'accoglienza autentica. Una villa luminosa, a pochi passi dal cuore di Monopoli, dove ogni dettaglio è pensato per farti sentire davvero a casa: non come ospite di passaggio, ma come qualcuno atteso con cura.
+              </p>
+              <p id="intro-body-2">
+                Le camere sono spaziose, impeccabili, inondate di luce naturale. Gli ambienti comuni invitano al relax. E l'atmosfera, quella di una casa vissuta con passione, si respira dal primo momento in cui varchi la soglia.
+              </p>
+              <p id="intro-body-3">
+                La posizione, appena defilata dal centro, regala il silenzio raro di una vacanza vera — senza rinunciare alla comodità di raggiungere in pochi minuti il mare, il centro storico e i tesori della Puglia più autentica.
+              </p>
+            </div>
+            <a id="intro-btn" href="#contatti" class="btn btn-outline reveal">Contattaci</a>
+          </div>
+          <div class="intro-images reveal">
+            <div class="intro-img-main">
+              <img
+                src="https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=800&q=80"
+                alt="Interno accogliente di Villa Maria Pia"
+                loading="lazy"
+              />
+            </div>
+            <div class="intro-img-secondary">
+              <img
+                src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=600&q=80"
+                alt="Giardino e spazi esterni della villa"
+                loading="lazy"
+              />
+              <div class="intro-img-tag">
+                <span>Monopoli, Puglia</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         PUNTI DI FORZA
+    ============================================ -->
+    <section class="section features-section" id="punti-forza" aria-label="I nostri punti di forza">
+      <div class="container">
+        <p id="features-label" class="section-label text-center reveal">Perché sceglierci</p>
+        <h2 id="features-title" class="section-title text-center reveal">Quello che rende speciale<br /><em id="features-title-em">Villa Maria Pia</em></h2>
+
+        <div class="features-grid">
+
+          <div class="feature-card reveal">
+            <div class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="20" cy="18" r="7" stroke="#B8986A" stroke-width="1.5"/>
+                <path d="M20 25 L20 36" stroke="#B8986A" stroke-width="1.5"/>
+                <path d="M14 32 L20 36 L26 32" stroke="#B8986A" stroke-width="1.5" stroke-linejoin="round"/>
+                <circle cx="20" cy="18" r="2.5" fill="#C4785A" opacity="0.6"/>
+              </svg>
+            </div>
+            <h3 id="feature-1-title" class="feature-title">Posizione ideale</h3>
+            <p id="feature-1-desc" class="feature-desc">A pochi minuti a piedi dal centro storico di Monopoli e a breve distanza dal mare. Tutto ciò che cerchi è vicino.</p>
+          </div>
+
+          <div class="feature-card reveal">
+            <div class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 28 C8 20 14 14 20 10 C26 14 32 20 32 28" stroke="#B8986A" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M12 28 C12 22 16 18 20 16 C24 18 28 22 28 28" stroke="#C4785A" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+                <line x1="8" y1="32" x2="32" y2="32" stroke="#B8986A" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3 id="feature-2-title" class="feature-title">Relax e tranquillità</h3>
+            <p id="feature-2-desc" class="feature-desc">Silenzio, verde e aria pulita. Un rifugio dalla frenesia estiva, pensato per chi vuole davvero riposare.</p>
+          </div>
+
+          <div class="feature-card reveal">
+            <div class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="6" y="16" width="28" height="16" rx="2" stroke="#B8986A" stroke-width="1.5"/>
+                <path d="M10 16 L10 12 C10 9.24 12.24 7 15 7 L25 7 C27.76 7 30 9.24 30 12 L30 16" stroke="#B8986A" stroke-width="1.5"/>
+                <rect x="16" y="24" width="8" height="8" rx="1" stroke="#C4785A" stroke-width="1" opacity="0.7"/>
+              </svg>
+            </div>
+            <h3 id="feature-3-title" class="feature-title">Camere curate</h3>
+            <p id="feature-3-desc" class="feature-desc">Spazi luminosi, arredi con gusto, pulizia impeccabile. Ogni camera è preparata con attenzione per offrirti il massimo comfort.</p>
+          </div>
+
+          <div class="feature-card reveal">
+            <div class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <ellipse cx="20" cy="26" rx="12" ry="5" stroke="#B8986A" stroke-width="1.5"/>
+                <path d="M10 26 C10 22 14 16 20 14 C26 16 30 22 30 26" stroke="#B8986A" stroke-width="1.5"/>
+                <circle cx="20" cy="10" r="3" fill="#C4785A" opacity="0.6"/>
+                <path d="M15 20 C16 19 18 18 20 18 C22 18 24 19 25 20" stroke="#C4785A" stroke-width="1" stroke-linecap="round" opacity="0.7"/>
+              </svg>
+            </div>
+            <h3 id="feature-4-title" class="feature-title">Colazione artigianale</h3>
+            <p id="feature-4-desc" class="feature-desc">Prodotti freschi, fatti in casa, ricercati con cura. Un risveglio che diventa uno dei momenti più belli della giornata.</p>
+          </div>
+
+          <div class="feature-card reveal">
+            <div class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 8 L22.47 15.3 L30.18 15.3 L23.86 19.77 L26.33 27.07 L20 22.6 L13.67 27.07 L16.14 19.77 L9.82 15.3 L17.53 15.3 Z" stroke="#B8986A" stroke-width="1.5" stroke-linejoin="round"/>
+                <circle cx="20" cy="20" r="2" fill="#C4785A" opacity="0.5"/>
+              </svg>
+            </div>
+            <h3 id="feature-5-title" class="feature-title">Ospitalità autentica</h3>
+            <p id="feature-5-desc" class="feature-desc">Piccoli gesti, disponibilità vera, consigli sinceri. L'ospitalità che fa la differenza tra un soggiorno e un ricordo.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         CAMERE
+    ============================================ -->
+    <section class="section rooms-section" id="camere">
+      <div class="container">
+        <div class="rooms-header">
+          <div>
+            <p id="rooms-label" class="section-label reveal">Dove dormire</p>
+            <h2 id="rooms-title" class="section-title reveal">Le camere della villa</h2>
+          </div>
+          <p id="rooms-intro" class="rooms-intro reveal">
+            Ogni spazio è pensato per offrire un riposo autentico: aria, luce, comfort e quella sensazione di cura che si percepisce in ogni dettaglio.
+          </p>
+        </div>
+
+        <div class="rooms-grid">
+
+          <div class="room-card reveal">
+            <div class="room-image-wrap">
+              <img
+                src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=800&q=80"
+                alt="Camera terrazza con vista sul giardino"
+                loading="lazy"
+              />
+              <div class="room-badge">Camera Terrazza</div>
+            </div>
+            <div class="room-info">
+              <h3 id="room-1-name" class="room-name">Camera Terrazza</h3>
+              <p id="room-1-desc" class="room-desc">Comfort per due persone con terrazzo privato e luce naturale. Aria condizionata, bagno privato e vista sul giardino.</p>
+              <ul class="room-amenities" aria-label="Servizi camera">
+                <li>Terrazzo privato</li>
+                <li>Aria condizionata</li>
+                <li>Wi-Fi gratuito</li>
+                <li>Bagno privato</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="room-card reveal">
+            <div class="room-image-wrap">
+              <img
+                src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=80"
+                alt="Camera giardino accogliente"
+                loading="lazy"
+              />
+              <div class="room-badge">Camera Giardino</div>
+            </div>
+            <div class="room-info">
+              <h3 id="room-2-name" class="room-name">Camera Giardino</h3>
+              <p id="room-2-desc" class="room-desc">Doppia con vista sul verde, ideale per chi ama il relax. Letto matrimoniale, comfort moderni e bagno privato.</p>
+              <ul class="room-amenities" aria-label="Servizi camera">
+                <li>Vista giardino</li>
+                <li>Aria condizionata</li>
+                <li>Wi-Fi gratuito</li>
+                <li>Bagno privato</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="room-card reveal">
+            <div class="room-image-wrap">
+              <img
+                src="https://images.unsplash.com/photo-1519710164239-da123dc03ef4?w=800&q=80"
+                alt="Camera ragazze stile femminile"
+                loading="lazy"
+              />
+              <div class="room-badge">Camera Ragazze</div>
+            </div>
+            <div class="room-info">
+              <h3 id="room-3-name" class="room-name">Camera Ragazze</h3>
+              <p id="room-3-desc" class="room-desc">Spazio pensato per due persone, con dettagli femminili e atmosfera calda. Confortevole e silenziosa, con bagno privato e aria condizionata.</p>
+              <ul class="room-amenities" aria-label="Servizi camera">
+                <li>Stile elegante</li>
+                <li>Aria condizionata</li>
+                <li>Wi-Fi gratuito</li>
+                <li>Bagno privato</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="room-card reveal">
+            <div class="room-image-wrap">
+              <img
+                src="https://images.unsplash.com/photo-1505691723518-36a8b5e72a0f?w=800&q=80"
+                alt="Camera Pia con arredo classico"
+                loading="lazy"
+              />
+              <div class="room-badge">Camera Pia</div>
+            </div>
+            <div class="room-info">
+              <h3 id="room-4-name" class="room-name">Camera Pia</h3>
+              <p id="room-4-desc" class="room-desc">Camera doppia accogliente e curata nei dettagli, ideale per coppie. Comoda, con letto queen size e bagno privato.</p>
+              <ul class="room-amenities" aria-label="Servizi camera">
+                <li>Letto queen size</li>
+                <li>Aria condizionata</li>
+                <li>Wi-Fi gratuito</li>
+                <li>Bagno privato</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="rooms-cta text-center reveal">
+          <a href="#contatti" class="btn btn-primary">Richiedi disponibilità</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         COLAZIONE
+    ============================================ -->
+    <section class="section breakfast-section" id="colazione">
+      <div class="breakfast-inner">
+        <div class="breakfast-image-col">
+          <img
+            src="https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?w=900&q=80"
+            alt="Tavola colazione con prodotti artigianali pugliesi"
+            loading="lazy"
+            class="breakfast-img"
+          />
+        </div>
+        <div class="breakfast-text-col">
+          <p id="breakfast-label" class="section-label reveal">Il mattino a Villa Maria Pia</p>
+          <h2 id="breakfast-title" class="section-title reveal">La colazione<br /><em id="breakfast-title-em">che ricorderai</em></h2>
+          <div class="breakfast-body reveal">
+            <p id="breakfast-body-1">
+              C'è un rituale che molti ospiti citano tra i ricordi più cari: il primo mattino a Villa Maria Pia, quando il profumo della cucina annuncia qualcosa di buono.
+            </p>
+            <p id="breakfast-body-2">
+              La nostra colazione è fatta di prodotti selezionati con cura: dolci artigianali, confetture di produzione locale, formaggi e salumi del territorio, frutta fresca di stagione. Un buffet che cambia ogni giorno, con quel tocco personale che nessun hotel può offrire.
+            </p>
+            <p id="breakfast-body-3">
+              Non una colazione da consumare in fretta. Un momento da vivere con calma, magari in giardino, con la luce del mattino pugliese che cambia di giorno in giorno.
+            </p>
+          </div>
+          <div class="breakfast-tags reveal" aria-label="Caratteristiche colazione">
+            <span id="breakfast-tag-1" class="tag">Prodotti locali</span>
+            <span id="breakfast-tag-2" class="tag">Dolci fatti in casa</span>
+            <span id="breakfast-tag-3" class="tag">Frutta fresca</span>
+            <span id="breakfast-tag-4" class="tag">Gluten-free su richiesta</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         TERRITORIO
+    ============================================ -->
+    <section class="section territory-section" id="territorio">
+      <div class="container">
+        <p id="territory-label" class="section-label text-center reveal">Dove siamo</p>
+        <h2 id="territory-title" class="section-title text-center reveal">Monopoli e la Puglia<br /><em id="territory-title-em">tutto intorno a te</em></h2>
+
+        <div class="territory-grid">
+          <div class="territory-text reveal">
+            <p id="territory-body-1">
+              Monopoli è una delle perle dell'Adriatico pugliese: un centro storico bianchissimo che scende fino al mare, porto peschereccio autentico, spiagge di ogni tipo a pochi minuti. Villa Maria Pia si trova in una posizione privilegiata — abbastanza vicina da raggiungere tutto a piedi o in bici, abbastanza defilata da preservare il silenzio.
+            </p>
+            <p id="territory-body-2">
+              Da qui, la Puglia più bella è a portata di mano: Alberobello e i suoi trulli, Polignano a Mare con le sue grotte, Ostuni la bianca, Lecce barocca. Una regione che sorprende a ogni curva di strada.
+            </p>
+
+            <div class="territory-map-placeholder" role="img" aria-label="Mappa concettuale del territorio">
+              Cerca i punti d'interesse sulla mappa per orientarti: centro storico, spiagge, e la villa sono qui.
+            </div>
+
+            <ul class="territory-list" aria-label="Distanze dai luoghi di interesse">
+              <li id="territory-item-1">
+                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="8" cy="7" r="4" stroke="#B8986A" stroke-width="1.2"/><path d="M8 11 L8 15" stroke="#B8986A" stroke-width="1.2"/></svg>
+                <strong>Centro storico Monopoli</strong> — 5 min a piedi
+              </li>
+              <li id="territory-item-2">
+                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="8" cy="7" r="4" stroke="#B8986A" stroke-width="1.2"/><path d="M8 11 L8 15" stroke="#B8986A" stroke-width="1.2"/></svg>
+                <strong>Mare e spiagge</strong> — 10 min a piedi
+              </li>
+              <li id="territory-item-3">
+                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="8" cy="7" r="4" stroke="#B8986A" stroke-width="1.2"/><path d="M8 11 L8 15" stroke="#B8986A" stroke-width="1.2"/></svg>
+                <strong>Polignano a Mare</strong> — 15 min in auto
+              </li>
+              <li id="territory-item-4">
+                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="8" cy="7" r="4" stroke="#B8986A" stroke-width="1.2"/><path d="M8 11 L8 15" stroke="#B8986A" stroke-width="1.2"/></svg>
+                <strong>Alberobello</strong> — 40 min in auto
+              </li>
+              <li id="territory-item-5">
+                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="8" cy="7" r="4" stroke="#B8986A" stroke-width="1.2"/><path d="M8 11 L8 15" stroke="#B8986A" stroke-width="1.2"/></svg>
+                <strong>Aeroporto di Bari</strong> — 45 min in auto
+              </li>
+            </ul>
+          </div>
+
+          <div class="territory-images reveal">
+            <div class="territory-img-top">
+              <img
+                src="https://images.unsplash.com/photo-1534430480872-3498386e7856?w=700&q=80"
+                alt="Vista sul porto di Monopoli al tramonto"
+                loading="lazy"
+              />
+              <span class="territory-img-caption">Foto 1: Porto di Monopoli</span>
+            </div>
+            <div class="territory-img-bottom">
+              <img
+                src="https://images.unsplash.com/photo-1583394293214-0e1128c6b4f2?w=700&q=80"
+                alt="Trulli di Alberobello in Puglia"
+                loading="lazy"
+              />
+              <span class="territory-img-caption">Foto 2: Trulli di Alberobello</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         RECENSIONI
+    ============================================ -->
+    <section class="section reviews-section" id="recensioni">
+      <div class="container">
+        <p id="reviews-label" class="section-label text-center reveal">Chi ci ha già scelto</p>
+        <h2 id="reviews-title" class="section-title text-center reveal">Le parole<br /><em id="reviews-title-em">dei nostri ospiti</em></h2>
+
+        <div class="reviews-grid">
+
+          <div class="review-card reveal">
+            <div class="review-stars" aria-label="5 stelle su 5">
+              ★★★★★
+            </div>
+            <blockquote id="review-1-text" class="review-text">
+              "La colazione è qualcosa che non dimenticherò facilmente. Prodotti artigianali, cura nei dettagli, un tavolo imbandito con amore. E le camere sono esattamente come appaiono nelle foto: luminose, pulite, accoglienti. Torneremo sicuramente."
+            </blockquote>
+            <footer class="review-author">
+              <div class="review-avatar" aria-hidden="true">F</div>
+              <div>
+                <cite id="review-1-author" class="review-name">Federica M.</cite>
+                <span id="review-1-origin" class="review-origin">Milano · luglio 2024</span>
+              </div>
+            </footer>
+          </div>
+
+          <div class="review-card reveal">
+            <div class="review-stars" aria-label="5 stelle su 5">
+              ★★★★★
+            </div>
+            <blockquote id="review-2-text" class="review-text">
+              "Abbiamo soggiornato quattro notti e ci siamo sentiti come a casa di amici nella parte più bella d'Italia. I proprietari sono davvero calorosi, la camera era immacolata e confortevole, e la posizione è perfetta — tranquilla ma a pochi minuti da tutto. Altamente consigliato."
+            </blockquote>
+            <footer class="review-author">
+              <div class="review-avatar" aria-hidden="true">J</div>
+              <div>
+                <cite id="review-2-author" class="review-name">James & Claire H.</cite>
+                <span id="review-2-origin" class="review-origin">London · agosto 2024</span>
+              </div>
+            </footer>
+          </div>
+
+          <div class="review-card reveal">
+            <div class="review-stars" aria-label="5 stelle su 5">
+              ★★★★★
+            </div>
+            <blockquote id="review-3-text" class="review-text">
+              "Abbiamo scelto Villa Maria Pia per il nostro anniversario e non potevamo fare scelta migliore. Atmosfera intima, posizione tranquilla ma strategica per visitare Monopoli e i dintorni. I proprietari ci hanno consigliato ristoranti e mete magnifiche che non avremmo trovato da soli."
+            </blockquote>
+            <footer class="review-author">
+              <div class="review-avatar" aria-hidden="true">L</div>
+              <div>
+                <cite id="review-3-author" class="review-name">Lorenzo & Anna P.</cite>
+                <span id="review-3-origin" class="review-origin">Torino · settembre 2024</span>
+              </div>
+            </footer>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         CTA FINALE
+    ============================================ -->
+    <section class="section cta-section" id="contatti" aria-label="Prenota il tuo soggiorno">
+      <div class="cta-bg">
+        <img
+          src="https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=1400&q=80"
+          alt="Vista mare Puglia al tramonto"
+          loading="lazy"
+          class="cta-bg-img"
+        />
+        <div class="cta-bg-overlay"></div>
+      </div>
+      <div class="container cta-content">
+        <p id="cta-label" class="section-label text-center reveal" style="color: rgba(250,248,244,0.7)">Pronti ad accoglierti</p>
+        <h2 id="cta-title" class="section-title text-center reveal" style="color: #FAF8F4">Inizia a pianificare<br /><em id="cta-title-em">la tua vacanza in Puglia</em></h2>
+        <p id="cta-subtitle" class="cta-subtitle reveal">
+          Scrivici per verificare le disponibilità, avere informazioni sulle camere o semplicemente per saperne di più su Villa Maria Pia. Rispondiamo entro poche ore.
+        </p>
+        <div class="cta-actions reveal">
+          <a id="cta-email" href="mailto:caffedelcorsomonopoli@gmail.com" class="btn btn-primary-light">Scrivici una email</a>
+          <a id="cta-whatsapp" href="https://wa.me/3381853433" class="btn btn-ghost-light" target="_blank" rel="noopener noreferrer">Contattaci su WhatsApp</a>
+        </div>
+        <div class="cta-contact-info reveal">
+          <span id="cta-contact-email">
+            <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:16px;height:16px;vertical-align:middle;margin-right:6px;"><path d="M4 4 L10 9 L16 4" stroke="currentColor" stroke-width="1.2"/><rect x="2" y="4" width="16" height="12" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+            caffedelcorsomonopoli@gmail.com
+          </span>
+          <span id="cta-contact-phone">
+            <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:16px;height:16px;vertical-align:middle;margin-right:6px;"><path d="M6 2 L14 2 C15.1 2 16 2.9 16 4 L16 16 C16 17.1 15.1 18 14 18 L6 18 C4.9 18 4 17.1 4 16 L4 4 C4 2.9 4.9 2 6 2Z" stroke="currentColor" stroke-width="1.2"/><circle cx="10" cy="15" r="1" fill="currentColor"/></svg>
+            +39 338 185 3433
+          </span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================
+       FOOTER
+  ============================================ -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <svg class="footer-logo-icon" viewBox="0 0 24 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M12 28 C12 28 4 20 4 12 C4 7.58 7.58 4 12 4 C16.42 4 20 7.58 20 12 C20 20 12 28 12 28Z" fill="#7A8C6E" opacity="0.5"/>
+          <path d="M12 28 C10 22 8 16 9 10 C10 6 12 4 12 4" stroke="#B8986A" stroke-width="1" fill="none"/>
+        </svg>
+        <div>
+          <h3 class="footer-name">Villa Maria Pia</h3>
+          <p class="footer-tagline">B&B · Monopoli, Puglia</p>
+        </div>
+      </div>
+
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h4 class="footer-col-title">Contatti</h4>
+          <ul class="footer-list">
+            <li><a href="mailto:caffedelcorsomonopoli@gmail.com">caffedelcorsomonopoli@gmail.com</a></li>
+            <li><a href="tel:+393381853433">+39 338 185 3433</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 class="footer-col-title">Dove siamo</h4>
+          <ul class="footer-list">
+            <li>Via Cappuccini, 154, 70043</li>
+            <li>70043 Monopoli (BA)</li>
+            <li>Puglia, Italia</li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 class="footer-col-title">Seguici</h4>
+          <ul class="footer-list footer-social">
+            <li><a href="#" aria-label="Instagram di Villa Maria Pia">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="1.5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+              Instagram
+            </a></li>
+            <li><a href="#" aria-label="Facebook di Villa Maria Pia">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M18 2 L15 2 C13.34 2 12 3.34 12 5 L12 8 L9 8 L9 12 L12 12 L12 22 L16 22 L16 12 L19 12 L19.5 8 L16 8 L16 5.5 C16 4.67 16.67 4 17.5 4 L18 4 Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+              Facebook
+            </a></li>
+            <li><a href="#" aria-label="Booking.com di Villa Maria Pia">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M8 8 L8 16 M8 12 C8 12 10 10 12 12 C14 14 16 12 16 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              Booking.com
+            </a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copy">&copy; 2025 Villa Maria Pia <a href="#">Privacy Policy</a> · <a href="#">Cookie Policy</a></p>
+      <p class="footer-credit">Sito realizzato con amore</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
