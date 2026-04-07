@@ -893,6 +893,10 @@ ul { list-style: none; }
   background: var(--sand-light);
 }
 
+#territory-item-6 a:hover {
+  color: #B8986A;
+}
+
 .territory-img-caption {
   position: absolute;
   left: 0;
