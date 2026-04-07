@@ -7,19 +7,36 @@
   'use strict';
 
   /* ============================================
+     JS READY — abilita animazioni CSS
+     Aggiunto come primissima cosa: se JS è attivo, il CSS
+     body.js-ready porta opacity:0 e poi .visible la ripristina.
+     Se JS non gira (file locale bloccato ecc.) i testi restano visibili.
+  ============================================ */
+  document.body.classList.add('js-ready');
+
+
+  /* ============================================
      NAVBAR — STICKY + SCROLL STATE
   ============================================ */
   const navbar = document.getElementById('navbar');
+  const heroSection = document.getElementById('hero');
 
   function updateNavbar() {
-    if (window.scrollY > 30) {
+    const scrollY = window.scrollY;
+    const heroBottom = heroSection ? heroSection.offsetTop + heroSection.offsetHeight - 80 : 0;
+
+    if (scrollY > 30) {
       navbar.classList.add('scrolled');
+      navbar.classList.remove('on-hero');
     } else {
       navbar.classList.remove('scrolled');
+      // on-hero solo se l'hero esiste ed è visibile
+      if (heroSection) {
+        navbar.classList.add('on-hero');
+      }
     }
   }
 
-  // Esegui subito (nel caso la pagina sia già scrollata al caricamento)
   updateNavbar();
   window.addEventListener('scroll', updateNavbar, { passive: true });
 
@@ -53,12 +70,10 @@
     }
   });
 
-  // Chiudi il menu quando si clicca un link interno
   mobileLinks.forEach(function (link) {
     link.addEventListener('click', closeMenu);
   });
 
-  // Chiudi premendo Escape
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') closeMenu();
   });
@@ -74,14 +89,12 @@
       function (entries) {
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
-            // Aggiungi stagger delay basato sulla posizione nella griglia
             const siblings = Array.from(
               entry.target.parentElement.querySelectorAll('.reveal')
             );
             const index = siblings.indexOf(entry.target);
 
             if (index > 0) {
-              // Delay progressivo per elementi nella stessa sezione
               const delay = Math.min(index * 0.1, 0.5);
               entry.target.style.transitionDelay = delay + 's';
             }
@@ -92,8 +105,8 @@
         });
       },
       {
-        threshold: 0.12,
-        rootMargin: '0px 0px -40px 0px',
+        threshold: 0.1,
+        rootMargin: '0px 0px -30px 0px',
       }
     );
 
@@ -101,7 +114,6 @@
       revealObserver.observe(el);
     });
   } else {
-    // Fallback per browser vecchi
     revealEls.forEach(function (el) {
       el.classList.add('visible');
     });
@@ -114,33 +126,28 @@
   const heroEls = document.querySelectorAll('.reveal-hero');
   const heroImg = document.querySelector('.hero-image');
 
-  // Attiva l'animazione parallax/zoom sull'immagine hero
   if (heroImg) {
     heroImg.addEventListener('load', function () {
       heroImg.classList.add('loaded');
     });
-    // Se è già caricata (cache)
     if (heroImg.complete) {
       heroImg.classList.add('loaded');
     }
   }
 
-  // Trigger immediato per gli elementi hero
-  window.addEventListener('DOMContentLoaded', function () {
+  // Trigger immediato per elementi hero
+  function triggerHeroReveal() {
     setTimeout(function () {
       heroEls.forEach(function (el) {
         el.classList.add('visible');
       });
-    }, 150);
-  });
+    }, 100);
+  }
 
-  // Se DOMContentLoaded è già passato
-  if (document.readyState === 'interactive' || document.readyState === 'complete') {
-    setTimeout(function () {
-      heroEls.forEach(function (el) {
-        el.classList.add('visible');
-      });
-    }, 150);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', triggerHeroReveal);
+  } else {
+    triggerHeroReveal();
   }
 
 
@@ -175,7 +182,6 @@
   /* ============================================
      PARALLAX LEGGERO HERO
   ============================================ */
-  const heroSection = document.querySelector('.hero');
   const heroImageWrap = document.querySelector('.hero-image-wrap');
 
   if (heroSection && heroImageWrap) {
@@ -185,7 +191,6 @@
       const scrollY = window.scrollY;
       const heroH = heroSection.offsetHeight;
 
-      // Solo mentre l'hero è visibile
       if (scrollY < heroH) {
         const offset = scrollY * 0.3;
         heroImageWrap.style.transform = 'translateY(' + offset + 'px)';
@@ -204,7 +209,7 @@
 
 
   /* ============================================
-     ACTIVE NAV LINK — highlight sezione corrente
+     ACTIVE NAV LINK
   ============================================ */
   const sections = document.querySelectorAll('section[id]');
   const navLinks = document.querySelectorAll('.nav-link:not(.nav-link-cta)');
@@ -231,188 +236,376 @@
   window.addEventListener('scroll', updateActiveLink, { passive: true });
 
 
-  /* ============================================
-     LAZY IMAGE OBSERVER
-  ============================================ */
-  const lazyImages = document.querySelectorAll('img[loading="lazy"]');
+  console.log('\u{1F33F} Villa Maria Pia — script caricato');
 
-  if ('IntersectionObserver' in window) {
-    const imgObserver = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            const img = entry.target;
-            img.classList.add('img-loaded');
-            imgObserver.unobserve(img);
-          }
-        });
-      },
-      { rootMargin: '200px 0px' }
-    );
-
-    lazyImages.forEach(function (img) {
-      imgObserver.observe(img);
-    });
-  }
+})();
 
 
-  /* ============================================
-     LANGUAGE SWITCHER
-  ============================================ */
-  const translatableIds = [
-    'nav-link-villa', 'nav-link-rooms', 'nav-link-breakfast', 'nav-link-territory', 'nav-link-reviews', 'nav-link-book',
-    'mobile-nav-link-villa', 'mobile-nav-link-rooms', 'mobile-nav-link-breakfast', 'mobile-nav-link-territory', 'mobile-nav-link-reviews', 'mobile-nav-link-book',
-    'hero-label', 'hero-title', 'hero-title-em', 'hero-subtitle', 'hero-btn-book', 'hero-btn-discover', 'hero-scroll',
-    'intro-label', 'intro-title', 'intro-title-em', 'intro-body-1', 'intro-body-2', 'intro-body-3', 'intro-btn',
-    'features-label', 'features-title', 'features-title-em', 'feature-1-title', 'feature-1-desc', 'feature-2-title', 'feature-2-desc', 'feature-3-title', 'feature-3-desc', 'feature-4-title', 'feature-4-desc', 'feature-5-title', 'feature-5-desc',
-    'rooms-label', 'rooms-title', 'rooms-intro', 'room-1-name', 'room-1-desc', 'room-2-name', 'room-2-desc', 'room-3-name', 'room-3-desc', 'room-4-name', 'room-4-desc',
-    'breakfast-label', 'breakfast-title', 'breakfast-title-em', 'breakfast-body-1', 'breakfast-body-2', 'breakfast-body-3', 'breakfast-tag-1', 'breakfast-tag-2', 'breakfast-tag-3', 'breakfast-tag-4',
-    'territory-label', 'territory-title', 'territory-title-em', 'territory-body-1', 'territory-body-2', 'territory-item-1', 'territory-item-2', 'territory-item-3', 'territory-item-4', 'territory-item-5',
-    'reviews-label', 'reviews-title', 'reviews-title-em', 'review-1-text', 'review-1-author', 'review-1-origin', 'review-2-text', 'review-2-author', 'review-2-origin', 'review-3-text', 'review-3-author', 'review-3-origin',
-    'cta-label', 'cta-title', 'cta-title-em', 'cta-subtitle', 'cta-email', 'cta-whatsapp', 'cta-contact-email', 'cta-contact-phone',
-  ];
+/* ============================================
+   LANGUAGE TOGGLE — IT / EN
+   Tutte le traduzioni sono qui. Per aggiungere
+   testi: aggiungi data-i18n="chiave" nell'HTML
+   e la coppia chiave/testo in questo oggetto.
+============================================ */
+(function () {
 
-  const originalText = {};
-  translatableIds.forEach((id) => {
-    const el = document.getElementById(id);
-    if (el) originalText[id] = el.innerHTML;
-  });
+  var translations = {
 
-  const translations = {
-    it: originalText,
     en: {
-      'nav-link-villa': 'The Villa',
-      'nav-link-rooms': 'Rooms',
-      'nav-link-breakfast': 'Breakfast',
-      'nav-link-territory': 'Monopoli',
-      'nav-link-reviews': 'Guests',
-      'nav-link-book': 'Book now',
-      'mobile-nav-link-villa': 'The Villa',
-      'mobile-nav-link-rooms': 'Rooms',
-      'mobile-nav-link-breakfast': 'Breakfast',
-      'mobile-nav-link-territory': 'Monopoli',
-      'mobile-nav-link-reviews': 'Guests',
-      'mobile-nav-link-book': 'Book now',
-      'hero-label': 'Monopoli · Puglia',
-      'hero-title': 'Where the Mediterranean<br/><em>feels like home</em>',
-      'hero-title-em': 'feels like home',
-      'hero-subtitle': 'An authentic stay, just steps from the historic center and the sea.',
-      'hero-btn-book': 'Book now',
-      'hero-btn-discover': 'Discover the villa',
-      'hero-scroll': 'Scroll',
-      'intro-label': 'B&B · Monopoli',
-      'intro-title': 'More than a stay.<br/><em>An experience.</em>',
-      'intro-title-em': 'An experience.',
-      'intro-body-1': 'Villa Maria Pia is born from a passion for genuine hospitality. A bright villa, a stone’s throw from the heart of Monopoli, where every detail is designed so you feel truly at home: not just a passing guest, but someone awaited with care.',
-      'intro-body-2': 'The rooms are spacious, impeccable, flooded with natural light. The common areas invite relaxation. And the atmosphere, that of a lived-in home with passion, is felt from the first moment you cross the threshold.',
-      'intro-body-3': 'The location, slightly away from the center, offers the rare quiet of a real holiday — without giving up the convenience of reaching the sea, the historic center and the treasures of the most authentic Puglia in minutes.',
-      'intro-btn': 'Contact us',
-      'features-label': 'Why choose us',
-      'features-title': 'What makes<br/><em>Villa Maria Pia</em> special',
-      'features-title-em': 'Villa Maria Pia',
-      'feature-1-title': 'Prime location',
-      'feature-1-desc': 'A few minutes walk from Monopoli historic center and the sea. Everything you seek is nearby.',
-      'feature-2-title': 'Relax and tranquility',
-      'feature-2-desc': 'Silence, green and fresh air. A refuge from summer frenzy, for those who really want to rest.',
-      'feature-3-title': 'Thoughtful rooms',
-      'feature-3-desc': 'Bright spaces, tasteful furnishings, impeccable cleanliness. Every room is prepared with attention for maximum comfort.',
-      'feature-4-title': 'Artisanal breakfast',
-      'feature-4-desc': 'Fresh, homemade products selected with care. A waking moment that becomes one of the best of the day.',
-      'feature-5-title': 'Genuine hospitality',
-      'feature-5-desc': 'Small gestures, true availability, honest tips. Hospitality that makes the difference between a stay and a memory.',
-      'rooms-label': 'Where to sleep',
-      'rooms-title': 'The villa rooms',
-      'rooms-intro': 'Every space is designed to offer authentic rest: air, light, comfort and that feeling of care you feel in every detail.',
-      'room-1-name': 'Terrace Room',
-      'room-1-desc': 'Comfort for two with private terrace and natural light. Air conditioning, private bathroom and garden view.',
-      'room-2-name': 'Garden Room',
-      'room-2-desc': 'Double room with garden view, ideal for relaxation. Double bed, modern comforts and private bathroom.',
-      'room-3-name': 'Girls Room',
-      'room-3-desc': 'Space for two with feminine details and warm atmosphere. Comfortable and quiet, private bathroom and air conditioning.',
-      'room-4-name': 'Pia Room',
-      'room-4-desc': 'Cozy double room with refined details, ideal for couples. Comfortable, with queen-size bed and private bathroom.',
-      'breakfast-label': 'Morning at Villa Maria Pia',
-      'breakfast-title': 'Breakfast<br/><em>you will remember</em>',
-      'breakfast-title-em': 'you will remember',
-      'breakfast-body-1': 'There is a ritual many guests mention among their fondest memories: the first morning at Villa Maria Pia, when the scent from the kitchen announces something good.',
-      'breakfast-body-2': 'Our breakfast is made with carefully selected products: artisanal pastries, local jams, cheeses and cold cuts from the area, fresh seasonal fruit. A buffet that changes daily with that personal touch no hotel can offer.',
-      'breakfast-body-3': 'Not a breakfast to rush. A moment to enjoy slowly, perhaps in the garden, with the changing light of Puglian morning.',
-      'breakfast-tag-1': 'Local products',
-      'breakfast-tag-2': 'Homemade pastries',
-      'breakfast-tag-3': 'Fresh fruit',
-      'breakfast-tag-4': 'Gluten-free on request',
-      'territory-label': 'Where we are',
-      'territory-title': 'Monopoli and Puglia<br/><em>all around you</em>',
-      'territory-title-em': 'all around you',
-      'territory-body-1': 'Monopoli is one of the pearls of the Puglian Adriatic: a whitewashed historic center descending to the sea, an authentic fishing port, beaches of all kinds a few minutes away. Villa Maria Pia enjoys a privileged position — close enough to walk or cycle everywhere, far enough to preserve peace.',
-      'territory-body-2': 'From here, the best Puglia is within reach: Alberobello and its trulli, Polignano a Mare with its caves, Ostuni the White, baroque Lecce. A region that surprises at every turn.',
-      'territory-item-1': '<svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="8" cy="7" r="4" stroke="#B8986A" stroke-width="1.2"/><path d="M8 11 L8 15" stroke="#B8986A" stroke-width="1.2"/></svg><strong>Monopoli historic center</strong> — 5 min walk',
-      'territory-item-2': '<svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="8" cy="7" r="4" stroke="#B8986A" stroke-width="1.2"/><path d="M8 11 L8 15" stroke="#B8986A" stroke-width="1.2"/></svg><strong>Sea and beaches</strong> — 10 min walk',
-      'territory-item-3': '<svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="8" cy="7" r="4" stroke="#B8986A" stroke-width="1.2"/><path d="M8 11 L8 15" stroke="#B8986A" stroke-width="1.2"/></svg><strong>Polignano a Mare</strong> — 15 min by car',
-      'territory-item-4': '<svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="8" cy="7" r="4" stroke="#B8986A" stroke-width="1.2"/><path d="M8 11 L8 15" stroke="#B8986A" stroke-width="1.2"/></svg><strong>Alberobello</strong> — 40 min by car',
-      'territory-item-5': '<svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="8" cy="7" r="4" stroke="#B8986A" stroke-width="1.2"/><path d="M8 11 L8 15" stroke="#B8986A" stroke-width="1.2"/></svg><strong>Bari Airport</strong> — 45 min by car',
-      'reviews-label': 'Guests who have already chosen us',
-      'reviews-title': 'Words<br/><em>from our guests</em>',
-      'reviews-title-em': 'from our guests',
-      'review-1-text': '"Breakfast is something I will never forget. Artisanal products, attention to detail, a table set with love. And the rooms are exactly as they appear in the photos: bright, clean, cozy. We will definitely come back."',
-      'review-1-author': 'Federica M.',
-      'review-1-origin': 'Milan · July 2024',
-      'review-2-text': '"We stayed four nights and it felt like visiting a friend\'s home in the most beautiful part of Italy. The hosts are genuinely warm, the room was spotless and comfortable, and the location is perfect — quiet, but minutes from everything. Highly recommended."',
-      'review-2-author': 'James & Claire H.',
-      'review-2-origin': 'London · August 2024',
-      'review-3-text': '"We chose Villa Maria Pia for our anniversary and could not have made a better choice. Intimate atmosphere, peaceful yet strategic location for exploring Monopoli and surroundings. The hosts recommended restaurants and amazing spots we would not have found on our own."',
-      'review-3-author': 'Lorenzo & Anna P.',
-      'review-3-origin': 'Turin · September 2024',
-      'cta-label': 'Ready to welcome you',
-      'cta-title': 'Start planning<br/><em>your Puglia</em>',
-      'cta-title-em': 'your Puglia',
-      'cta-subtitle': 'Write to us to check availability, get information about the rooms or learn more about Villa Maria Pia. We respond within a few hours.',
-      'cta-email': 'Write us an email',
-      'cta-whatsapp': 'Contact us on WhatsApp',
-      'cta-contact-email': '<svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:16px;height:16px;vertical-align:middle;margin-right:6px;"><path d="M4 4 L10 9 L16 4" stroke="currentColor" stroke-width="1.2"/><rect x="2" y="4" width="16" height="12" rx="2" stroke="currentColor" stroke-width="1.2"/></svg> caffedelcorsomonopoli@gmail.com',
-      'cta-contact-phone': '<svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:16px;height:16px;vertical-align:middle;margin-right:6px;"><path d="M6 2 L14 2 C15.1 2 16 2.9 16 4 L16 16 C16 17.1 15.1 18 14 18 L6 18 C4.9 18 4 17.1 4 16 L4 4 C4 2.9 4.9 2 6 2Z" stroke="currentColor" stroke-width="1.2"/><circle cx="10" cy="15" r="1" fill="currentColor"/></svg> +39 338 185 3433',
+      /* Meta & html lang */
+      _lang: 'en',
+      _html_lang: 'en',
+      _title: 'Villa Maria Pia — B&B in Monopoli, Puglia',
+      _flag: '\uD83C\uDDEC\uD83C\uDDE7',  /* 🇬🇧 */
+      _label: 'EN',
+
+      /* Navbar */
+      nav_villa:     'The Villa',
+      nav_rooms:     'Rooms',
+      nav_breakfast: 'Breakfast',
+      nav_guests:    'Guests',
+      nav_book:      'Book Now',
+
+      /* Hero */
+      hero_label:    'Monopoli · Puglia',
+      hero_scroll:   'Scroll',
+      hero_discover: 'Discover the villa',
+
+      /* Intro */
+      intro_label: 'B&B · Monopoli',
+      intro_cta:   'Contact us on WhatsApp',
+      intro_tag:   'Monopoli, Puglia',
+
+      /* Features */
+      feat_label: 'Why choose us',
+
+      /* Rooms */
+      rooms_label: 'Where to sleep',
+      rooms_cta:   'Check availability on WhatsApp',
+
+      /* Breakfast */
+      bk_label: 'Mornings at Villa Maria Pia',
+
+      /* Location */
+      loc_label: 'Where we are',
+
+      /* Reviews */
+      rev_label: 'What our guests say',
+
+      /* CTA */
+      cta_label: 'Ready to welcome you',
+      cta_wa: 'Write to us on WhatsApp',
+      // cta_call removed (WA only)
+
+      /* Footer */
+      foot_contact: 'Contact',
+      foot_where:   'Where we are',
+      foot_follow:  'Follow us',
+      foot_credit:  'Crafted with care',
+
+      /* Full block translations (innerHTML) */
+      hero_title_h1:    'Where the Mediterranean<br><em>feels like home</em>',
+      hero_subtitle_p:  'An authentic stay, just steps from the old town and the sea.',
+      intro_title_h2:   'More than a stay.<br><em>An experience.</em>',
+      intro_body_html:  '<p>Villa Mariapia is a small boutique B&amp;B in Monopoli with just 4 rooms, designed to offer an intimate, relaxed and carefully curated stay.</p><p>Every morning our guests are invited to enjoy our <strong>Breakfast Experience</strong> at the family café, just a few minutes from the villa — where cappuccino, fresh-squeezed juice, made-to-order eggs and artisan pastries await.</p><p>The property also features a private (unattended) car park. The perfect choice for those seeking authenticity, atmosphere and a truly local experience.</p>',
+      feat_title_h2:    'What makes<br><em>Villa Maria Pia</em> special',
+      feat_1_title:     'Ideal location',
+      feat_1_desc:      'Just a few minutes\' walk from Monopoli\'s historic centre and a short distance from the sea. Everything you need is close by.',
+      feat_2_title:     'Peace &amp; tranquillity',
+      feat_2_desc:      'Silence, greenery and fresh air. A retreat from the summer rush, designed for those who truly want to rest.',
+      feat_3_title:     'Thoughtfully designed rooms',
+      feat_3_desc:      'Light-filled spaces, tasteful furnishings, impeccable cleanliness. Every room is prepared with care to offer you the utmost comfort.',
+      feat_4_title:     'Artisan breakfast',
+      feat_4_desc:      'Fresh, homemade, lovingly sourced products. A morning moment that becomes one of the highlights of your day.',
+      feat_5_title:     'Genuine hospitality',
+      feat_5_desc:      'Small gestures, real availability, honest recommendations. The kind of hospitality that turns a stay into a lasting memory.',
+      rooms_title_h2:   'The villa\'s rooms',
+      rooms_intro_p:    'Every space is designed to offer authentic rest: air, light, comfort and that feeling of care you sense in every single detail.',
+      room1_badge:      'Relax Room',
+      room1_name:       'Relax Room',
+      room1_desc:       'A peaceful haven designed for those who want to truly unwind. Warm tones, soft lighting and carefully chosen details create an atmosphere of calm from the very first moment.',
+      room1_am1: 'Air conditioning', room1_am2: 'Free Wi-Fi', room1_am3: 'Private bathroom', room1_am4: 'TV',
+      room2_badge:      'Pia Room',
+      room2_name:       'Pia Room',
+      room2_desc:       'Named after the villa itself, this room embodies its spirit: bright, welcoming and refined. A comfortable retreat with warm colours and an enveloping atmosphere.',
+      room2_am1: 'Private terrace', room2_am2: 'Air conditioning', room2_am3: 'Free Wi-Fi', room2_am4: 'Mini fridge',
+      room3_badge:      'Garden Room',
+      room3_name:       'Garden Room',
+      room3_desc:       'Overlooking the garden, this room offers a direct connection with the natural surroundings of the villa. Soft light, natural materials and a quiet setting perfect for a restorative stay.',
+      room3_am1: 'Garden view', room3_am2: 'Natural materials', room3_am3: 'Air conditioning', room3_am4: 'Free Wi-Fi',
+      room4_badge: 'Terrace Room', room4_name: 'Terrace Room',
+      room4_desc: 'Step outside without leaving your room. This suite features a private terrace where you can sip your morning coffee surrounded by the Mediterranean breeze.',
+      room4_am1: 'Private terrace', room4_am2: 'Air conditioning', room4_am3: 'Free Wi-Fi', room4_am4: 'Mini fridge',
+      bk_title_h2:      'The breakfast<br><em>you\'ll remember</em>',
+      bk_body_html:     '<p>Every morning at Villa Mariapia begins with a ritual worth waking up for. Our guests are invited to the family café, just a few minutes\' walk from the villa, to enjoy a real <strong>Breakfast Experience</strong>.</p><p>Freshly brewed cappuccino, cold-pressed orange juice, eggs cooked to order, artisan pastries from local bakeries. Not a standard buffet — a genuine moment of pleasure, prepared with care every single day.</p><p>It\'s the kind of breakfast that makes you want to come back just for that.</p>',
+      bk_tag1: 'Local products', bk_tag2: 'Homemade pastries', bk_tag3: 'Fresh fruit', bk_tag4: 'Gluten-free on request',
+      loc_title_h2:     'Monopoli and Puglia<br><em>all around you</em>',
+      loc_body_html:    '<p>Villa Mariapia sits in a peaceful spot just minutes from the centre of Monopoli and its beautiful beaches. The historic old town — with its whitewashed alleys, traditional restaurants and the characterful fishing harbour — is easy to reach on foot and represents the authentic heart of the city.</p><p>The area is also an ideal base for exploring Puglia: Polignano a Mare, Alberobello and the Valle d\'Itria are all close by. A perfect balance between relaxation and discovery.</p>',
+      dist1_place: 'Monopoli historic centre', dist1_time: '5 min on foot',
+      dist2_place: 'Sea &amp; beaches',        dist2_time: '10 min on foot',
+      dist3_place: 'Polignano a Mare',         dist3_time: '15 min by car',
+      dist4_place: 'Alberobello',              dist4_time: '40 min by car',
+      dist5_place: 'Bari Airport',             dist5_time: '45 min by car',
+      rev_title_h2:     'Words from<br><em>our guests</em>',
+      rev1_text:  '"The breakfast is something I won\'t easily forget. Artisan products, attention to every detail, a table laid with genuine care. And the rooms are exactly as they appear in the photos: light-filled, spotless and welcoming. We will absolutely be back."',
+      rev1_name:  'Federica M.',   rev1_origin: 'Milan · July 2024',
+      rev2_text:  '"We stayed four nights and it felt like visiting a friend\'s home in the most beautiful part of Italy. The hosts are genuinely warm, the room was spotless and comfortable, and the location is perfect — quiet, but minutes from everything. Highly recommended."',
+      rev2_name:  'James &amp; Claire H.', rev2_origin: 'London · August 2024',
+      rev3_text:  '"We chose Villa Maria Pia for our anniversary and couldn\'t have made a better choice. An intimate atmosphere, a quiet yet strategic location for exploring Monopoli and the surrounding area. The owners recommended restaurants and places we would never have found on our own."',
+      rev3_name:  'Lorenzo &amp; Anna P.', rev3_origin: 'Turin · September 2024',
+      cta_title_h2:     'Start planning<br><em>your Puglia</em>',
+      cta_subtitle_p:   'Write to us on WhatsApp to check availability, ask about our rooms or simply find out more. We reply quickly.',
+      foot_tagline: 'B&B · Monopoli, Puglia',
     },
+
+    it: {
+      _lang: 'it',
+      _html_lang: 'it',
+      _title: 'Villa Maria Pia — B&B a Monopoli, Puglia',
+      _flag: '\uD83C\uDDEE\uD83C\uDDF9',  /* 🇮🇹 */
+      _label: 'IT',
+
+      nav_villa:     'La Villa',
+      nav_rooms:     'Camere',
+      nav_breakfast: 'Colazione',
+      nav_guests:    'Ospiti',
+      nav_book:      'Prenota',
+
+      hero_label:    'Monopoli · Puglia',
+      hero_scroll:   'Scorri',
+      hero_discover: 'Scopri la villa',
+
+      intro_label: 'B&B · Monopoli',
+      intro_cta:   'Contattaci su WhatsApp',
+      intro_tag:   'Monopoli, Puglia',
+
+      feat_label: 'Perché sceglierci',
+      rooms_label: 'Dove dormire',
+      rooms_cta:   'Richiedi disponibilità su WhatsApp',
+      bk_label: 'Il mattino a Villa Maria Pia',
+      loc_label: 'Dove siamo',
+      rev_label: 'Chi ci ha già scelto',
+      cta_label: 'Pronti ad accoglierti',
+      cta_wa: 'Scrivici su WhatsApp',
+      // cta_call removed
+      foot_contact: 'Contatti',
+      foot_where:   'Dove siamo',
+      foot_follow:  'Seguici',
+      foot_credit:  'Sito realizzato con cura artigianale',
+
+      hero_title_h1:    'Dove il Mediterraneo<br><em>diventa casa</em>',
+      hero_subtitle_p:  'Un soggiorno autentico, a pochi passi dal centro storico e dal mare.',
+      intro_title_h2:   'Più di un soggiorno.<br><em>Un\'esperienza.</em>',
+      intro_body_html:  '<p>Villa Mariapia è una piccola boutique B&amp;B a Monopoli con sole 4 camere, pensata per offrire un soggiorno intimo, rilassato e curato nei dettagli.</p><p>Ogni mattina gli ospiti sono invitati a vivere la nostra <strong>Breakfast Experience</strong> nel caffè di famiglia, a pochi minuti dalla villa — cappuccino, spremuta fresca, uova al momento e dolci artigianali.</p><p>La struttura dispone inoltre di parcheggio privato non custodito. Una scelta ideale per chi cerca autenticità, atmosfera e un\'esperienza locale vera.</p>',
+      feat_title_h2:    'Quello che rende speciale<br><em>Villa Maria Pia</em>',
+      feat_1_title:     'Posizione ideale',
+      feat_1_desc:      'A pochi minuti a piedi dal centro storico di Monopoli e a breve distanza dal mare. Tutto ciò che cerchi è vicino.',
+      feat_2_title:     'Relax e tranquillità',
+      feat_2_desc:      'Silenzio, verde e aria pulita. Un rifugio dalla frenesia estiva, pensato per chi vuole davvero riposare.',
+      feat_3_title:     'Camere curate',
+      feat_3_desc:      'Spazi luminosi, arredi con gusto, pulizia impeccabile. Ogni camera è preparata con attenzione per offrirti il massimo comfort.',
+      feat_4_title:     'Colazione artigianale',
+      feat_4_desc:      'Prodotti freschi, fatti in casa, ricercati con cura. Un risveglio che diventa uno dei momenti più belli della giornata.',
+      feat_5_title:     'Ospitalità autentica',
+      feat_5_desc:      'Piccoli gesti, disponibilità vera, consigli sinceri. L\'ospitalità che fa la differenza tra un soggiorno e un ricordo.',
+      rooms_title_h2:   'Le camere della villa',
+      rooms_intro_p:    'Ogni spazio è pensato per offrire un riposo autentico: aria, luce, comfort e quella sensazione di cura che si percepisce in ogni dettaglio.',
+      room1_badge: 'Camera Relax', room1_name: 'Camera Relax',
+      room1_desc:  'Un rifugio di pace pensato per chi vuole davvero staccare. Tonalità calde, luce soffusa e dettagli curati creano un'atmosfera di benessere fin dal primo momento.',
+      room1_am1: 'Aria condizionata', room1_am2: 'Wi-Fi gratuito', room1_am3: 'Bagno privato', room1_am4: 'TV',
+      room2_badge: 'Camera Pia', room2_name: 'Camera Pia',
+      room2_desc:  'Porta il nome della villa e ne incarna lo spirito: luminosa, accogliente e raffinata. Un rifugio confortevole con colori caldi e un'atmosfera avvolgente.',
+      room2_am1: 'Terrazzo privato', room2_am2: 'Aria condizionata', room2_am3: 'Wi-Fi gratuito', room2_am4: 'Minifrigo',
+      room3_badge: 'Camera Giardino', room3_name: 'Camera Giardino',
+      room3_desc:  'Affacciata sul giardino, offre un contatto diretto con la natura che circonda la villa. Luce naturale, materiali naturali e silenzio per un soggiorno rigenerante.',
+      room3_am1: 'Vista giardino', room3_am2: 'Materiali naturali', room3_am3: 'Aria condizionata', room3_am4: 'Wi-Fi gratuito',
+      room4_badge: 'Camera Terrazza', room4_name: 'Camera Terrazza',
+      room4_desc: 'Esci all\'aperto senza lasciare la tua camera. Una terrazza privata dove gustare il caffè mattutino con la brezza mediterranea e il silenzio dei tetti di Monopoli.',
+      room4_am1: 'Terrazza privata', room4_am2: 'Aria condizionata', room4_am3: 'Wi-Fi gratuito', room4_am4: 'Minifrigo',
+      bk_title_h2:  'La colazione<br><em>che ricorderai</em>',
+      bk_body_html: '<p>Ogni mattina a Villa Mariapia inizia con un rituale che vale la pena di aspettare. I nostri ospiti sono invitati al caffè di famiglia, a pochi minuti dalla villa, per vivere una vera <strong>Breakfast Experience</strong>.</p><p>Cappuccino appena fatto, succo d\'arancia fresco, uova preparate al momento, dolci artigianali di produzione locale. Non un buffet standard — un vero momento di piacere, curato ogni giorno con passione.</p><p>La colazione che ti fa venir voglia di tornare anche solo per quella.</p>',
+      bk_tag1: 'Prodotti locali', bk_tag2: 'Dolci fatti in casa', bk_tag3: 'Frutta fresca', bk_tag4: 'Gluten-free su richiesta',
+      loc_title_h2:  'Monopoli e la Puglia<br><em>tutto intorno a te</em>',
+      loc_body_html: '<p>Villa Mariapia si trova in una posizione tranquilla a pochi minuti dal centro di Monopoli e dalle sue splendide spiagge. Il centro storico, con i suoi vicoli bianchi, ristoranti tipici e il caratteristico porto, è facilmente raggiungibile a piedi e rappresenta il cuore autentico della città.</p><p>La zona è ideale come punto di partenza per esplorare la Puglia: Polignano a Mare, Alberobello e la Valle d\'Itria sono nelle vicinanze. Un equilibrio perfetto tra relax e scoperta del territorio.</p>',
+      dist1_place: 'Centro storico Monopoli', dist1_time: '5 min a piedi',
+      dist2_place: 'Mare e spiagge',          dist2_time: '10 min a piedi',
+      dist3_place: 'Polignano a Mare',         dist3_time: '15 min in auto',
+      dist4_place: 'Alberobello',              dist4_time: '40 min in auto',
+      dist5_place: 'Aeroporto di Bari',        dist5_time: '45 min in auto',
+      rev_title_h2: 'Le parole<br><em>dei nostri ospiti</em>',
+      rev1_text:  '"La colazione è qualcosa che non dimenticherò facilmente. Prodotti artigianali, cura nei dettagli, un tavolo imbandito con amore. E le camere sono esattamente come appaiono nelle foto: luminose, pulite, accoglienti. Torneremo sicuramente."',
+      rev1_name:  'Federica M.',      rev1_origin: 'Milano · luglio 2024',
+      rev2_text:  '"We stayed four nights and it felt like visiting a friend\'s home in the most beautiful part of Italy. The hosts are genuinely warm, the room was spotless and comfortable, and the location is perfect — quiet, but minutes from everything. Highly recommended."',
+      rev2_name:  'James &amp; Claire H.', rev2_origin: 'London · agosto 2024',
+      rev3_text:  '"Abbiamo scelto Villa Maria Pia per il nostro anniversario e non potevamo fare scelta migliore. Atmosfera intima, posizione tranquilla ma strategica per visitare Monopoli e i dintorni. I proprietari ci hanno consigliato ristoranti e mete magnifiche che non avremmo trovato da soli."',
+      rev3_name:  'Lorenzo &amp; Anna P.', rev3_origin: 'Torino · settembre 2024',
+      cta_title_h2:   'Inizia a pianificare<br><em>la tua Puglia</em>',
+      cta_subtitle_p: 'Scrivici su WhatsApp per verificare le disponibilità, avere informazioni sulle camere o semplicemente per saperne di più. Rispondiamo velocemente.',
+      foot_tagline: 'B&B · Monopoli, Puglia',
+    }
   };
 
-  function setLanguage(lang) {
-    if (!translations[lang]) return;
-    translatableIds.forEach((id) => {
-      const el = document.getElementById(id);
-      if (!el) return;
-      const value = translations[lang][id];
-      if (typeof value !== 'undefined') {
-        el.innerHTML = value;
-      }
+  /* ---- State ---- */
+  var currentLang = 'en'; /* pagina parte in inglese */
+
+  /* ---- DOM references ---- */
+  var btn      = document.getElementById('lang-toggle');
+  var flagEl   = document.getElementById('lang-flag');
+  var labelEl  = document.getElementById('lang-label');
+
+  if (!btn) return; /* safety */
+
+  /* ---- Apply translations ---- */
+  function applyLang(lang) {
+    var t = translations[lang];
+    if (!t) return;
+
+    /* html lang attribute & title */
+    document.documentElement.lang = t._html_lang;
+    document.title = t._title;
+
+    /* --- data-i18n simple text --- */
+    document.querySelectorAll('[data-i18n]').forEach(function (el) {
+      var key = el.getAttribute('data-i18n');
+      if (t[key] !== undefined) el.innerHTML = t[key];
     });
 
-    const gray = translations[lang]['territory-items'] || null;
-    const captions = {
-      it: ['Foto 1: Porto di Monopoli', 'Foto 2: Trulli di Alberobello'],
-      en: ['Photo 1: Monopoli harbour', 'Photo 2: Alberobello trulli'],
-    };
-    document.querySelectorAll('.territory-img-caption').forEach((el, index) => {
-      el.textContent = captions[lang][index] || el.textContent;
+    /* --- Hero title & subtitle (complex blocks) --- */
+    var heroTitle = document.querySelector('.hero-title');
+    if (heroTitle) heroTitle.innerHTML = t.hero_title_h1;
+
+    var heroSub = document.querySelector('.hero-subtitle');
+    if (heroSub) heroSub.innerHTML = t.hero_subtitle_p;
+
+    /* --- Intro body --- */
+    var introTitle = document.querySelector('.intro-text .section-title');
+    if (introTitle) introTitle.innerHTML = t.intro_title_h2;
+
+    var introBody = document.querySelector('.intro-body');
+    if (introBody) introBody.innerHTML = t.intro_body_html;
+
+    /* --- Features --- */
+    var featTitle = document.querySelector('.features-section .section-title');
+    if (featTitle) featTitle.innerHTML = t.feat_title_h2;
+
+    var featCards = document.querySelectorAll('.feature-card');
+    var featKeys = [1,2,3,4,5];
+    featCards.forEach(function (card, i) {
+      var k = featKeys[i];
+      var titleEl = card.querySelector('.feature-title');
+      var descEl  = card.querySelector('.feature-desc');
+      if (titleEl && t['feat_'+k+'_title']) titleEl.innerHTML = t['feat_'+k+'_title'];
+      if (descEl  && t['feat_'+k+'_desc'])  descEl.innerHTML  = t['feat_'+k+'_desc'];
     });
 
-    const toggle = document.getElementById('lang-toggle');
-    if (toggle) {
-      toggle.textContent = lang === 'it' ? 'EN' : 'IT';
+    /* --- Rooms --- */
+    var roomsTitle = document.querySelector('.rooms-section .section-title');
+    if (roomsTitle) roomsTitle.innerHTML = t.rooms_title_h2;
+
+    var roomsIntro = document.querySelector('.rooms-intro');
+    if (roomsIntro) roomsIntro.innerHTML = t.rooms_intro_p;
+
+    var roomCards = document.querySelectorAll('.room-card');
+    roomCards.forEach(function (card, i) {
+      var k = i + 1;
+      var badge = card.querySelector('.room-badge');
+      var name  = card.querySelector('.room-name');
+      var desc  = card.querySelector('.room-desc');
+      var ams   = card.querySelectorAll('.room-amenities li');
+      if (badge && t['room'+k+'_badge']) badge.innerHTML = t['room'+k+'_badge'];
+      if (name  && t['room'+k+'_name'])  name.innerHTML  = t['room'+k+'_name'];
+      if (desc  && t['room'+k+'_desc'])  desc.innerHTML  = t['room'+k+'_desc'];
+      ams.forEach(function (li, j) {
+        var amKey = 'room'+k+'_am'+(j+1);
+        if (t[amKey]) li.innerHTML = t[amKey];
+      });
+    });
+
+    /* --- Breakfast --- */
+    var bkTitle = document.querySelector('.breakfast-section .section-title');
+    if (bkTitle) bkTitle.innerHTML = t.bk_title_h2;
+
+    var bkBody = document.querySelector('.breakfast-body');
+    if (bkBody) bkBody.innerHTML = t.bk_body_html;
+
+    var bkTags = document.querySelectorAll('.breakfast-tags .tag');
+    [1,2,3,4].forEach(function (k, i) {
+      if (bkTags[i] && t['bk_tag'+k]) bkTags[i].innerHTML = t['bk_tag'+k];
+    });
+
+    /* --- Location --- */
+    var locTitle = document.querySelector('.territory-section .section-title');
+    if (locTitle) locTitle.innerHTML = t.loc_title_h2;
+
+    var locBody = document.querySelector('.territory-text');
+    if (locBody) {
+      /* replace only the p tags, keep the distance-list */
+      var distList = locBody.querySelector('.distance-list');
+      locBody.innerHTML = t.loc_body_html;
+      if (distList) locBody.appendChild(distList);
     }
 
-    localStorage.setItem('preferred-lang', lang);
-  }
-
-  const savedLang = localStorage.getItem('preferred-lang') || 'it';
-  setLanguage(savedLang);
-
-  const langBtn = document.getElementById('lang-toggle');
-  if (langBtn) {
-    langBtn.addEventListener('click', function () {
-      const nextLang = (localStorage.getItem('preferred-lang') || 'it') === 'it' ? 'en' : 'it';
-      setLanguage(nextLang);
+    /* distances */
+    var distItems = document.querySelectorAll('.distance-item');
+    distItems.forEach(function (item, i) {
+      var k = i + 1;
+      var place = item.querySelector('.distance-place');
+      var time  = item.querySelector('.distance-time');
+      if (place && t['dist'+k+'_place']) place.innerHTML = t['dist'+k+'_place'];
+      if (time  && t['dist'+k+'_time'])  time.innerHTML  = t['dist'+k+'_time'];
     });
+
+    /* --- Reviews --- */
+    var revTitle = document.querySelector('.reviews-section .section-title');
+    if (revTitle) revTitle.innerHTML = t.rev_title_h2;
+
+    var revCards = document.querySelectorAll('.review-card');
+    revCards.forEach(function (card, i) {
+      var k = i + 1;
+      var text   = card.querySelector('.review-text');
+      var name   = card.querySelector('.review-name');
+      var origin = card.querySelector('.review-origin');
+      if (text   && t['rev'+k+'_text'])   text.innerHTML   = t['rev'+k+'_text'];
+      if (name   && t['rev'+k+'_name'])   name.innerHTML   = t['rev'+k+'_name'];
+      if (origin && t['rev'+k+'_origin']) origin.innerHTML = t['rev'+k+'_origin'];
+    });
+
+    /* --- CTA --- */
+    var ctaTitle = document.querySelector('.cta-content .section-title');
+    if (ctaTitle) ctaTitle.innerHTML = t.cta_title_h2;
+
+    var ctaSub = document.querySelector('.cta-subtitle');
+    if (ctaSub) ctaSub.innerHTML = t.cta_subtitle_p;
+
+    /* --- Footer tagline --- */
+    var tagline = document.querySelector('.footer-tagline');
+    if (tagline && t.foot_tagline) tagline.innerHTML = t.foot_tagline;
+
+    /* --- Toggle button --- */
+    flagEl.innerHTML  = t._flag;
+    labelEl.innerHTML = t._label;
   }
 
-  console.log('🌿 Villa Maria Pia — script caricato');
+  /* ---- Toggle handler ---- */
+  btn.addEventListener('click', function () {
+    currentLang = currentLang === 'en' ? 'it' : 'en';
+
+    /* flip animation */
+    btn.classList.add('switching');
+    setTimeout(function () { btn.classList.remove('switching'); }, 320);
+
+    applyLang(currentLang);
+
+    /* save preference */
+    try { localStorage.setItem('vmp_lang', currentLang); } catch(e) {}
+  });
+
+  /* ---- Init: restore saved language or default to EN ---- */
+  try {
+    var saved = localStorage.getItem('vmp_lang');
+    if (saved && translations[saved]) currentLang = saved;
+  } catch(e) {}
+
+  applyLang(currentLang);
 
 })();
